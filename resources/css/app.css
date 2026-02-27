@@ -1,0 +1,97 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
+@import "tailwindcss";
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source '../**/*.blade.php';
+@source '../**/*.js';
+
+@theme {
+    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+        'Segoe UI Symbol', 'Noto Color Emoji';
+}
+
+@theme {
+  --font-roboto: "Roboto", calibri; 
+}
+
+body, html{
+    scrollbar-width: none;
+}
+
+body::-webkit-scrollbar { 
+    display: none;  /* Older Safari and Chromium */
+}
+
+a{
+    text-decoration: none;
+    color: black;
+}
+
+li{
+    list-style: none;
+}
+
+.navbar{
+    background-color: #EEEEEE;
+    position: fixed;
+    z-index: 99;
+    width: 100%;
+}
+
+.navLogo{
+    width: 300px;
+}
+
+.navLink:hover{
+    background-color: grey;
+}
+
+.hamburger{
+    cursor: pointer;
+    display: none;
+}
+
+.closeNav{
+    cursor: pointer;
+}
+
+.sidebar{
+    background-color: #EEEEEE;
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 100vh;
+    width: 250px;
+    z-index: 100;
+    justify-content: start;
+    backdrop-filter: blur(5px);
+    display: none;
+    box-shadow: -10px 0 10px rgba(0, 0, 0, 0.205);
+}
+
+footer{
+    background-color: black;
+    padding: 40px 20px; 
+    color: white;
+}
+
+.FooterItems{
+    margin: 0;
+}
+
+.FooterItems li{
+    display: flex;
+    width: 100%;
+}
+@media (max-width: 1080px) {
+    .navLink{
+        display: none;
+    }
+    .hamburger{
+        display: block;
+    }
+    .navLogo{
+        width: 200px    ;
+    }
+}

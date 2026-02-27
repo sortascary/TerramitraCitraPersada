@@ -1,0 +1,13 @@
+body{
+    background-color: #F3F4F4;
+}
+
+aside{
+    background-color: #061E29;
+    color: white;
+}
+
+aside div ul li{
+    padding-right: 1rem !important;
+    padding-left: 1rem !important;
+}

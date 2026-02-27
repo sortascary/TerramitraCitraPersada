@@ -1,0 +1,71 @@
+
+
+.fab {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    background: #08CB00;
+    color: white;
+    font-size: 28px;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0,0,0,.3);
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    z-index: 90;
+}
+
+.chat {
+    min-width: 360px;
+    max-width: 400px;
+    color: white;
+    border: 2px solid black;
+    border-radius: 20px;
+    overflow: clip;
+    box-shadow: 0 4px 12px rgba(0,0,0,.3);
+    align-items: center;
+}
+
+.reveal {
+  opacity: 0;
+}
+
+.reveal:hover{
+  opacity: 1;
+}
+
+.overflow-y-scroll::-webkit-scrollbar {
+  width: 8px;
+}
+
+.overflow-y-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.overflow-y-scroll::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 10px;
+}
+
+.overflow-y-scroll::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+.overlay-forum{
+    position: fixed;
+    z-index: 99;
+}
+
+.closeChat{
+    cursor: pointer;
+}
+
+.fab:hover {
+    background: #08af02;
+}
+

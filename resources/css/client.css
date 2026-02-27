@@ -1,0 +1,14 @@
+.pl-lg-10 {
+    padding-left: calc(var(--spacing) * 10);
+}
+
+.pr-lg-10 {
+    padding-right: calc(var(--spacing) * 10);
+}
+
+@media (max-width: 991px) {
+    .pl-lg-10,
+    .pr-lg-10 {
+        padding: 0;
+    }
+}

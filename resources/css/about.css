@@ -1,0 +1,32 @@
+.managementItem{
+    background-color: white; 
+    border: 1px solid black; 
+    border-radius: 5px; 
+    padding: 40px 20px; 
+    text-align: center;
+}
+
+#imageContainer {
+  position: relative;
+  width: 1000px;
+  height: 200px;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 100%;
+  filter: saturate(0);
+  transition: all ease 0.5s;
+}
+
+#imageContainer:hover {
+  filter: saturate(100%);
+}
+
+#imageContainer > * {
+  position: absolute;
+  inset: 0;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover;
+}
