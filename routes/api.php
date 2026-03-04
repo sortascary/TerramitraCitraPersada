@@ -34,6 +34,8 @@ Route::prefix('Forum')->group(function () {
     // Route::get('getForum', [ChatController::class, 'getChats'])->middleware('auth:sanctum');
     Route::post('addForum', [DashboardController::class, 'CreateForum']);
     Route::delete('DeleteForum/{id}', [DashboardController::class, 'CreateForum']);
+    Route::post('/Poll/Vote', [ChatController::class, 'vote'])->middleware('auth:sanctum');
+    Route::post('/AddMessage', [ChatController::class, 'sendMessage'])->middleware('auth:sanctum');
 });
 
 Route::prefix('Messages')->group(function () {
@@ -47,3 +49,5 @@ Route::prefix('Comment')->group(function () {
     Route::post('addComment', [DashboardController::class, 'Create']);
     Route::delete('DeleteComment/{id}', [DashboardController::class, 'Create']);
 });
+
+Route::post('/Settings', [DashboardController::class, 'UpdateTitle']);

@@ -16,6 +16,8 @@ class MessageAttachmentResource extends JsonResource
     {
         return [
             'id' => $this->id,
+            'name' => $this->name,
+            'type' => $this->type,
             'file' => $this->file,
             'size' => $this ->size,
         ];

@@ -17,7 +17,7 @@ return new class extends Migration
             $table->foreignId('forum_id')->cascadeOnDelete();
             $table->foreignId('user_id')->nullable();
             $table->enum('message_type', ['text', 'poll'])->nullable()->default('text');
-            $table->foreignId('messages_id')->nullable();
+            $table->foreignId('message_id')->nullable();
             $table->timestamp('deleted_at')->nullable();
             $table->timestamps();
         });
@@ -27,6 +27,7 @@ return new class extends Migration
             $table->foreignId('message_id')->cascadeOnDelete();
             $table->string('name');
             $table->string('file');
+            $table->enum('type', ['image', 'doc'])->nullable()->default('image');
             $table->double('size', 15, 8);
             $table->timestamps();
         });
@@ -34,16 +35,14 @@ return new class extends Migration
         Schema::create('poll_options', function (Blueprint $table) {
             $table->id();
             $table->string('option');
-            $table->foreignId('messages_id')->cascadeOnDelete();
+            $table->foreignId('message_id')->cascadeOnDelete();
             $table->timestamps();
             });
             
         Schema::create('poll_votes', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('forum_id');
             $table->foreignId('user_id');
-            $table->enum('message_type', ['text', 'poll'])->nullable()->default('text');
-            $table->foreignId('messages_id')->cascadeOnDelete();
+            $table->foreignId('option_id')->cascadeOnDelete();
             $table->timestamps();
         });
     }

@@ -22,11 +22,14 @@ class ForumMessageRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'message' => 'required|string',
+            'message' => 'nullable|string|required_without_all:attachments',
             'forum_id' => 'required|string',
+            'message_id' => 'nullable|string',
             'message_type' => 'nullable|string',
-            'attachments' => 'nullable|array',
-            'attachments.*.file' => 'nullable|image|mimes:jpeg,png,jpg,pdf,doc,docx|max:5120'
+            'attachments' => 'nullable|array|required_without_all:message',
+            'attachments.*' => 'nullable|file|mimes:jpeg,png,jpg,pdf,doc,docx|max:5120',
+            'poll' => 'required|array',
+            'poll.options' => 'required_if:message_type,poll|array|min:2',
         ];
     }
 }

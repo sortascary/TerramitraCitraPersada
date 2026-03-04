@@ -11,6 +11,7 @@ use App\Models\Forum;
 use App\Models\MessageForum;
 use App\Models\ForumAccess;
 use App\Models\Comment;
+use App\Models\Setting;
 
 
 use Illuminate\Support\Str;
@@ -104,6 +105,15 @@ class DashboardController extends Controller
         $user = User::where('id', $id)->first();
         $roles = DB::table('roles')->get();
         return view('Dashboard.DashboardData.User.UserEdit')
+            ->with('user', $user)
+            ->with('roles', $roles);
+    }
+
+    public function dashboardUserSetting(String $id)
+    {
+        $user = User::where('id', $id)->first();
+        $roles = DB::table('roles')->get();
+        return view('Dashboard.DashboardData.UserSetting')
             ->with('user', $user)
             ->with('roles', $roles);
     }
@@ -268,6 +278,20 @@ class DashboardController extends Controller
         return view('Dashboard.DashboardData.Settings');
     }
 
+    public function UpdateTitle(Request $request)
+    {
+        $data = $request->validate([
+            'site_name' => 'required|string'
+        ]);
+
+        Setting::updateOrCreate(
+            ['key' => 'site_name'],
+            ['value' => $request->site_name]
+        );
+
+        return back()->with('success', 'Settings saved.');
+    }
+
     public function CreateUser(UserRequest $request)
     {
         $data = $request->validated();
@@ -357,6 +381,56 @@ class DashboardController extends Controller
             DB::commit();
 
             return redirect()->intended('/Dashboard/User')->with('success', 'User updated successfully.');
+
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
+
+    public function UpdateSetting(UpdateUserRequest $request, string $id)
+    {
+        $user = User::find($id);
+
+        if (!$user) {
+            return response()->json(['message' => 'User not found'], 404);
+        }
+
+        $data = $request->validated();
+
+        $oldImage = $user->image;
+
+        DB::beginTransaction();
+
+        try{
+            $user->fill($data);
+
+            if ($request->hasFile('image')) {
+                if ($oldImage) {
+                    Storage::disk('public')->delete(
+                        str_replace('storage/', '', $oldImage)
+                    );
+                }
+                $filename = Str::uuid() . '.' . $request->file('image')->getClientOriginalExtension();
+
+                $path = $request->file('image')->storeAs(
+                    'profiles',
+                    $filename,
+                    'public'
+                );
+
+                // Save image path
+                $user->update([
+                    'image' => 'storage/' . $path,
+                ]);
+            }
+
+            $user->save();
+
+            DB::commit();
+
+            return redirect()->intended('/Dashboard/Settings')->with('success', 'User updated successfully.');
 
 
         } catch (\Exception $e) {

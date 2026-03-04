@@ -31,13 +31,17 @@ class MessageForum extends Model
         return $this->belongsTo(User::class, 'user_id', 'id');
     }
     
-    public function message()
+    public function message_reply()
     {
-        return $this->belongsToMany(MessageForum::class, 'message_id', 'id');
+        return $this->belongsTo(MessageForum::class, 'message_id');
     }
     
     public function attachments()
     {
         return $this->hasMany(MessageAttachment::class, 'message_id', 'id');
+    }
+
+    public function polloptions() {
+        return $this->hasMany(PollOption::class, 'message_id', 'id');
     }
 }

@@ -3,18 +3,14 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Model;
 
-class MessageAttachment extends Model
+class PollVote extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'message_id',
-        'name',
-        'file',
-        'type',
-        'size',
+        'option_id',
+        'user_id',
     ];
 }

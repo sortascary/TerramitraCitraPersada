@@ -16,7 +16,7 @@
         
         <div class="row">
             @foreach ($blogs as $blog)
-                <a href="/Blog/{{ $blog->id }}" class="col-lg-4 mb-10 px-2">
+                <a href="/Blog/{{ $blog->id }}" class="col-lg-4 col-md-6 mb-10 px-2">
                     <div class="drop-shadow p-4" style="background-color: white">
                         <div class="h-[200px] w-full object-cover bg-stone-400">
                             @if ($blog->contentAttachments->isNotEmpty())

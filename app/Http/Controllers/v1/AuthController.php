@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\v1;
 
 use App\Models\User;
+use App\Models\Forum;
+use App\Models\ForumAccess;
 use App\Models\UserLog;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
@@ -13,7 +15,7 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
 
 
-use App\Http\Resources\auth\UserResource;
+use App\Http\Resources\UserResource;
 
 use App\Http\Requests\auth\LoginRequest;
 use App\Http\Requests\auth\RegisterRequest;
@@ -110,6 +112,13 @@ class AuthController extends Controller
                 'role_id' => "1",
                 'password' => Hash::make($data['password']),
             ]);
+
+            $forum = Forum::where('name', 'public forum')->first();
+
+            ForumAccess::create([
+                'forum_id' => $forum->id,
+                'user_id' => $user->id
+            ]);
         }
 
         $user->sendEmailVerificationNotification();
@@ -131,7 +140,7 @@ class AuthController extends Controller
             ]);
         }
 
-        if($user->role->role == 'Admin'){
+        if($user->role->role == 'Admin' || $user->role->role == 'Konten' || $user->role->role == 'Moderator'){
             return redirect('/Dashboard');
         }else{
             return redirect()->intended('/');

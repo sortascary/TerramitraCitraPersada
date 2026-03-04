@@ -40,9 +40,11 @@ Route::post('/register', [AuthController::class, 'registerWeb'])->name('register
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::prefix('Forum')->group(function () {
-    Route::get('/', [ChatController::class, 'getChats'])->middleware('auth');
+    Route::get('/', [ChatController::class, 'getChats']);
     Route::get('/{id}', [ChatController::class, 'getMessages']);
     Route::post('/AddMessage', [ChatController::class, 'sendMessage'])->name('add.message');
+    Route::post('/Poll/Vote', [ChatController::class, 'vote'])->middleware('auth');
+    Route::delete('/DeleteMessage/{id}', [ChatController::class, 'deleteMessage'])->middleware('auth');
     
 });
 
@@ -93,5 +95,10 @@ Route::prefix('Dashboard')->middleware(['auth', 'role:Admin,Moderator,Konten'])-
         Route::delete('deleteChat/{id}', [DashboardController::class, 'DeleteChat'])->name('delete.Chat');
     });
 
-    Route::get('/Settings', [DashboardController::class, 'dashboardsettings']);
+    Route::prefix('Settings')->group(function () {
+        Route::get('/', [DashboardController::class, 'dashboardsettings']);
+        Route::post('/', [DashboardController::class, 'UpdateTitle'])->name('edit.settings');
+        Route::get('/{id}', [DashboardController::class, 'dashboardUserSetting']);
+        Route::post('/{id}', [DashboardController::class, 'UpdateSetting'])->name('edit.Setting');
+    });
 });

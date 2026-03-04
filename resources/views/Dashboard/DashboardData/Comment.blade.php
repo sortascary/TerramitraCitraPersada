@@ -109,9 +109,9 @@
         <div class="w-full min-h-[70vh] bg-white p-5 rounded-[5px] drop-shadow">
             <div class="flex justify-between mb-10">
                 <h2>Blog Comments</h2>
-                <button class="bg-[#5F9598] text-white py-1 px-3 rounded-[10px]">Get PDF</button>
+                <button class="get-pdf bg-[#5F9598] text-white py-1 px-3 rounded-[10px]">Get PDF</button>
             </div>
-            <canvas id="Chart"></canvas>
+            <canvas class="dashboard-content" id="Chart"></canvas>
 
         </div>
     </div>
