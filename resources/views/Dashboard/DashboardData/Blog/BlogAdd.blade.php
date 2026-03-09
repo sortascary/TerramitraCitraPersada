@@ -31,7 +31,7 @@
                     </div>
                 </div>
                 <div class="mb-3 col-4">
-                    <label for="images" class="block mb-2 text-sm font-medium text-gray-900">Company Logo</label>
+                    <label for="images" class="block mb-2 text-sm font-medium text-gray-900">Blog pictures</label>
                     <div class="flex flex-col w-full min-h-64 border border-black border-default-strong rounded-lg p-3">
 
                         <label for="images" class="items-center justify-center w-full p-2 border border-black border-default-strong rounded-lg cursor-pointer hover:bg-stone-200">

@@ -1,9 +1,9 @@
 <x-dashboardLayout>
-            <script>
-                window.chartLabels = @json($logins->pluck('date'));
-                window.chartValues = @json($logins->pluck('total'));
-                window.chartLabelName = 'User Logins';
-            </script>
+    <script>
+        window.chartLabels = @json($logins->pluck('date'));
+        window.chartValues = @json($logins->pluck('total'));
+        window.chartLabelName = 'User Logins';
+    </script>
     @vite(['resources/js/chart.js'])
 
     <div class="bg-white p-2 w-full">

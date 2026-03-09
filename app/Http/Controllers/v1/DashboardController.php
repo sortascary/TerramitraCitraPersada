@@ -43,27 +43,64 @@ class DashboardController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function AdminDashboard()
+    public function Dashboard(Request $request)
     {
-        $userCount = User::count();
-        $contentCount = Content::count();
-        $forumCount = Forum::count();
-        $commentCount = Comment::count();
-        $userUsage = User::count();
+        if($request->user()->role->role == 'Admin'){
+            $userCount = User::count();
+            $contentCount = Content::count();
+            $forumCount = Forum::count();
+            $commentCount = Comment::count();
+            $userUsage = User::count();
+    
+            $logins = DB::table('user_logs')
+                ->selectRaw('DATE(logged_in_at) as date, COUNT(*) as total')
+                ->groupBy('date')
+                ->orderBy('date')
+                ->get();
+    
+    
+            return view('Dashboard.DashboardAdmin')
+                ->with('userCount', $userCount)
+                ->with('contentCount', $contentCount)
+                ->with('forumCount', $forumCount)
+                ->with('commentCount', $commentCount)
+                ->with('logins', $logins);
 
-        $logins = DB::table('user_logs')
-            ->selectRaw('DATE(logged_in_at) as date, COUNT(*) as total')
-            ->groupBy('date')
-            ->orderBy('date')
-            ->get();
+        }
+        if($request->user()->role->role == 'Konten'){
+            $data = Content::query();
+            $contentCount = Content::count();
+            $commentCount = Comment::count();
+            $viewCount = ContentView::count();
 
+            if ($request->filled('search')) {
+                $data->where('title', 'like', '%' . $request->search . '%');
+            }
 
-        return view('Dashboard.DashboardAdmin')
-            ->with('userCount', $userCount)
-            ->with('contentCount', $contentCount)
-            ->with('forumCount', $forumCount)
-            ->with('commentCount', $commentCount)
-            ->with('logins', $logins);
+            $contents = $data->paginate(10);
+    
+            return view('Dashboard.DashboardContent')
+                ->with('contents', $contents)
+                ->with('viewCount', $viewCount)
+                ->with('contentCount', $contentCount)
+                ->with('commentCount', $commentCount);
+
+        }
+        if($request->user()->role->role == 'Moderator'){
+            $forumCount = Forum::count();
+    
+            $messages = MessageForum::withTrashed()
+                ->selectRaw('DATE(created_at) as date, COUNT(*) as total')
+                ->groupBy('date')
+                ->orderBy('date')
+                ->get();
+    
+    
+            return view('Dashboard.DashboardMod')
+                ->with('forumCount', $forumCount)
+                ->with('messages', $messages);
+
+        }
     }
 
     public function dashboardUser(Request $request)

@@ -49,7 +49,7 @@ Route::prefix('Forum')->group(function () {
 });
 
 Route::prefix('Dashboard')->middleware(['auth', 'role:Admin,Moderator,Konten'])->group(function () {
-    Route::get('/', [DashboardController::class, 'admindashboard']);
+    Route::get('/', [DashboardController::class, 'Dashboard']);
 
     Route::prefix('User')->group(function () {
         Route::get('/', [DashboardController::class, 'dashboarduser']);
