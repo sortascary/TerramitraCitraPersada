@@ -131,20 +131,7 @@ class AuthController extends Controller
             ], 201);
         }
 
-        if (!Auth::attempt([
-                'email' => $data['email'],
-                'password' => $data['password'],
-            ])) {
-            return back()->withErrors([
-                'email' => 'Invalid credentials',
-            ]);
-        }
-
-        if($user->role->role == 'Admin' || $user->role->role == 'Konten' || $user->role->role == 'Moderator'){
-            return redirect('/Dashboard');
-        }else{
-            return redirect()->intended('/');
-        }
+        return redirect('/linkSent');
     }
 
     public function registerApi(RegisterRequest $request)
@@ -201,6 +188,15 @@ class AuthController extends Controller
         return redirect('/');
     }
 
+    public function LinkSent(){
+
+        return view('Dashboard.EmailSent', [
+            'message' => 'Successfully verified your email',
+            'success' => true
+        ]);
+        
+    }
+
     public function verify(Request $request, $id, $hash)
     {
         if (!$request->hasValidSignature()) {
@@ -227,12 +223,15 @@ class AuthController extends Controller
         }
 
         $user->markEmailAsVerified();
-        event(new Verified($user));
+        // event(new Verified($user));
 
-        return view('Dashboard.Verify', [
-            'message' => 'Successfully verified your email',
-            'success' => true
-        ]);
+        Auth::login($user);
+
+        if ($user->role->role == 'Admin' || $user->role->role == 'Konten' || $user->role->role == 'Moderator') {
+            return redirect('/Dashboard');
+        } else {
+            return redirect()->intended('/');
+        }
     }
     
 }

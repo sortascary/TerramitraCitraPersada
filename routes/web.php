@@ -25,6 +25,7 @@ Route::prefix('Blog')->group(function () {
 });
 
 Route::get('/verify/{id}/{hash}', [AuthController::class, 'verify'])->name('verification.verify');
+Route::get('/linkSent', [AuthController::class, 'LinkSent']);
 
 Route::get('/Contact', [PageController::class, 'Contact']);
 

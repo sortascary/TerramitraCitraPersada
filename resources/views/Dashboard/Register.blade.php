@@ -24,7 +24,7 @@
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M5 12l4-4m-4 4 4 4"/>
                     </svg>
                 </button>
-                  <form class="space-y-4 md:space-y-6" action="{{ route('register') }}" method="POST">
+                  <form id="form" class="space-y-4 md:space-y-6" action="{{ route('register') }}" method="POST">
                     @csrf
                       <div>
                           <label for="name" class="block mb-2 text-sm font-medium text-gray-900">Username</label>

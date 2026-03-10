@@ -132,7 +132,7 @@ async function fetchForums() {
         const lastMessage = forum.message;
         const initials = forum.name.split(' ').map(w => w.charAt(0).toUpperCase()).join('');
         const imageHTML = forum.image
-            ? `<img src="/storage/${forum.image}" class="rounded-circle" style="width: 80px; height: 80px; object-fit: cover;">`
+            ? `<img src="/${forum.image}" class="rounded-circle" style="width: 80px; height: 80px; object-fit: cover;">`
             : `<div class="rounded-circle bg-stone-500 flex items-center justify-center text-white" style="width: 80px; height: 80px;"><h2 class="m-0">${initials}</h2></div>`;
             
         const dateObj = new Date(forum.message?.created_at);

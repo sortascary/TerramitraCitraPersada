@@ -648,7 +648,6 @@ class DashboardController extends Controller
         return redirect()->intended('/Dashboard/Comment')->with('success', 'Comment updated successfully.');
     }
 
-    //TODO: CRUD FORUM
     public function CreateForum(ForumRequest $request)
     {
         $data = $request->validated();
@@ -668,12 +667,29 @@ class DashboardController extends Controller
                 ]);
             }
 
-            DB::commit();
+            if ($request->hasFile('image')) {
+                if ($oldImage) {
+                    Storage::disk('public')->delete(
+                        str_replace('storage/', '', $oldImage)
+                    );
+                }
+                $filename = Str::uuid() . '.' . $request->file('image')->getClientOriginalExtension();
 
-            // return response()->json([
-            //     'message' => 'Forum created successfully',
-            //     'data' => new ForumResource($forum)
-            // ], 201);
+                $path = $request->file('image')->storeAs(
+                    'forums',
+                    $filename,
+                    'public'
+                );  
+
+                // Save image path
+                $forum->update([
+                    'image' => 'storage/' . $path,
+                ]);
+            }
+
+            $forum->save();
+
+            DB::commit();
 
             return redirect()->intended('/Dashboard/Forum')->with('success', 'Forum created successfully.');
 
