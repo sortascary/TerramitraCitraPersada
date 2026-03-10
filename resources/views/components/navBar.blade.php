@@ -1,5 +1,5 @@
 @vite(['resources/js/navbar.js'])
-<nav class='flex flex-row justify-between items-center navbar px-3 py-0 drop-shadow'>
+<nav class='flex flex-row justify-between items-center navbar px-3 py-0 drop-shadow-[0_35px_35px_rgba(0,0,0,0.25)]'>
         <div>
             <img src="/Logo/tcp.png"  class="navLogo">
         </div>

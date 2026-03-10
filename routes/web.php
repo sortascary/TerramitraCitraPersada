@@ -24,10 +24,7 @@ Route::prefix('Blog')->group(function () {
     Route::post('comment/{id}', [PageController::class, 'createCommentWeb'])->middleware('auth')->name('comment');
 });
 
-Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
-        $request->fulfill();
-        return redirect('/');
-    })->middleware('signed')->name('verification.verify');
+Route::get('/verify/{id}/{hash}', [AuthController::class, 'verify'])->name('verification.verify');
 
 Route::get('/Contact', [PageController::class, 'Contact']);
 
@@ -42,7 +39,7 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::prefix('Forum')->group(function () {
     Route::get('/', [ChatController::class, 'getChats']);
     Route::get('/{id}', [ChatController::class, 'getMessages']);
-    Route::post('/AddMessage', [ChatController::class, 'sendMessage'])->name('add.message');
+    Route::post('/AddMessage', [ChatController::class, 'sendMessage'])->name('add.message')->middleware('auth');
     Route::post('/Poll/Vote', [ChatController::class, 'vote'])->middleware('auth');
     Route::delete('/DeleteMessage/{id}', [ChatController::class, 'deleteMessage'])->middleware('auth');
     

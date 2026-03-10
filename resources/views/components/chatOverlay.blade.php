@@ -70,11 +70,6 @@
 
                     <button id="addPollOption" type="button" class="text-sm text-blue-500 hover:underline mb-3">+ Add option</button>
 
-                    <div class="flex items-center gap-2 mb-4">
-                        <input type="checkbox" id="pollAnonymous" class="rounded" />
-                        <label for="pollAnonymous" class="text-sm">Anonymous voting</label>
-                    </div>
-
                     <div class="flex gap-2 justify-end">
                         <button id="cancelPoll" type="button" class="px-4 py-2 text-sm rounded-lg bg-gray-100 hover:bg-gray-200">Cancel</button>
                         <button id="submitPoll" type="button" class="px-4 py-2 text-sm rounded-lg bg-black text-white hover:bg-gray-800">Send Poll</button>
@@ -117,9 +112,9 @@
                 </div>
     
     
-                <div id="attachmentMenu" class="hidden w-full absolute bottom-20 left-0 bg-white shadow-lg rounded-lg p-3 flex justify-evenly gap-2 z-50">
+                <div id="attachmentMenu" class="hidden w-full absolute bottom-20 left-0 bg-white shadow-lg rounded-lg p-3 flex justify-evenly z-50">
     
-                    <button type="button" class="attachmentOption text-black items-center flex flex-col" data-type="file">
+                    <button type="button" class="attachmentOption text-black items-center flex flex-col col-3" data-type="file">
                         <div>
                             <svg class="w-8 h-8 text-black" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
                                 <path fill-rule="evenodd" d="M9 2.221V7H4.221a2 2 0 0 1 .365-.5L8.5 2.586A2 2 0 0 1 9 2.22ZM11 2v5a2 2 0 0 1-2 2H4v11a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2h-7Z" clip-rule="evenodd"/>
@@ -129,7 +124,7 @@
                             File
                         </span>
                     </button>
-                    <button type="button" class="attachmentOption text-black items-center flex flex-col" data-type="image">
+                    <button type="button" class="attachmentOption text-black items-center flex flex-col col-3" data-type="image">
                         <div>
                             <svg class="w-8 h-8 text-black" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
                                 <path fill-rule="evenodd" d="M13 10a1 1 0 0 1 1-1h.01a1 1 0 1 1 0 2H14a1 1 0 0 1-1-1Z" clip-rule="evenodd"/>
@@ -140,7 +135,7 @@
                             Image
                         </span>
                     </button>
-                    <button type="button" class="attachmentOption text-black items-center flex flex-col" data-type="camera">
+                    <button type="button" class="attachmentOption text-black items-center flex flex-col col-3" data-type="camera">
                         <div>
                             <svg class="w-8 h-8 text-black" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
                                 <path fill-rule="evenodd" d="M7.5 4.586A2 2 0 0 1 8.914 4h6.172a2 2 0 0 1 1.414.586L17.914 6H19a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h1.086L7.5 4.586ZM10 12a2 2 0 1 1 4 0 2 2 0 0 1-4 0Zm2-4a4 4 0 1 0 0 8 4 4 0 0 0 0-8Z" clip-rule="evenodd"/>
@@ -150,7 +145,7 @@
                             Camera
                         </span>
                     </button>
-                    <button type="button" class="attachmentOption text-black items-center flex flex-col" data-type="poll">
+                    <button type="button" class="attachmentOption text-black items-center flex flex-col col-3" data-type="poll">
                         <div>
                             <svg class="w-8 h-8 text-black" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 15v4m6-6v6m6-4v4m6-6v6M3 11l6-5 6 5 5.5-5.5"/>

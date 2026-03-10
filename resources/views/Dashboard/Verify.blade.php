@@ -3,67 +3,42 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>NEW TerraMitra Citra Persada</title>
-    <link rel="icon" href="Logo/tcp_logo.png">
+    <title>{{ \App\Models\Setting::get('site_name', 'Terramitra Citra Persada') }}</title>
+    <link rel="icon" href="/Logo/tcp_logo.png">
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     @vite('resources/css/app.css')
   </head>
-  <body>
+  <body class=" text-center flex flex-col justify-center items-center h-[100svh]">
+    <h2>Link Sent!</h2>
     <section>
-      <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
-          <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl py-10">
-              A link has been sent!
-          </h1>
-          <div class="w-full bg-white rounded-lg shadow border-5 md:mt-0 sm:max-w-md xl:p-0 bg-gray-800 border-[#1D546D]">
-              <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
-                <button onclick="location.href = '/'" class="pb-4">
-                    <svg class="w-6 h-6 text-black" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M5 12l4-4m-4 4 4 4"/>
-                    </svg>
-                </button>
-                  <form class="space-y-4 md:space-y-6" action="{{ route('login') }}" method="POST">
-                    @csrf
-                      <div>
-                          <label for="email" class="block mb-2 text-sm font-medium text-gray-900">Your email</label>
-                          <input type="text" name="email" id="email" class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" placeholder="name@company.com" required="">
-                      </div>
-                      <div>
-                          <label for="password" class="block mb-2 text-sm font-medium text-gray-900 ">Password</label>
-                          <input type="password" name="password" id="password" placeholder="••••••••" class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" required="">
-                      </div>
-                      <div class="flex items-center justify-between">
-                          <div class="flex items-start">
-                              <div class="flex items-center h-5">
-                                <input id="remember" name="remember" type="checkbox"  value="1" class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 ">
-                              </div>
-                              <div class="ml-3 text-sm">
-                                <label for="remember" class="text-gray-500">Remember me</label>
-                              </div>
-                          </div>
-                          <a href="#" class="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500">Forgot password?</a>
-                      </div>
-                      <div>
-                        <label for="verify" class="block mb-2 text-sm font-medium text-gray-900">Verification</label>
-                        <div for="verify" class="g-recaptcha" data-sitekey="{{ env('RECAPTCHA_SITE_KEY') }}"></div>
-                      </div>
-                      <div>
-                        <div class="bg-[#1D546D] hover:bg-[#184458] focus:ring-4 focus:outline-none focus:ring-primary-300 rounded-lg">
-                          <button type="submit" class="w-full text-white font-medium text-sm px-5 py-2.5 text-center">Sign in</button>
-                        </div>
-                        @if ($errors->any())
-                          <ul class="p-0">
-                            @foreach ($errors->all() as $error)
-                            <li class="text-red-500">{{ $error }}</li>
-                            @endforeach
-                          </ul>
-                        @endif
-                      </div>
-                    </form>
-                  </div>
-                </div>
-            </div>
+      <main class="text-center flex flex-col justify-center items-center border-[#1D546D] shadow border-5 p-5 rounded-lg">
+        <svg class="w-20 h-20 text-black" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M2.038 5.61A2.01 2.01 0 0 0 2 6v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6c0-.12-.01-.238-.03-.352l-.866.65-7.89 6.032a2 2 0 0 1-2.429 0L2.884 6.288l-.846-.677Z"/>
+          <path d="M20.677 4.117A1.996 1.996 0 0 0 20 4H4c-.225 0-.44.037-.642.105l.758.607L12 10.742 19.9 4.7l.777-.583Z"/>
+        </svg>
+
+
+              {{-- @if ($success)
+                  <svg class="checkmark w-40 h-40 text-green-500" viewBox="-2 -2 57 57" fill="none" stroke="currentColor" stroke-width="5">
+                      <circle cx="26" cy="26" r="25" fill="none" />
+                      <path d="M14 27 L22 35 L38 17" fill="none" stroke-linecap="round" stroke-linejoin="round" class="check" />
+                  </svg>
+              @else
+                  <svg class="w-40 h-40 text-red-500" viewBox="0 0 52 52" fill="none" stroke="currentColor" stroke-width="5">
+                      <line x1="15" y1="15" x2="37" y2="37" class="x-line" stroke-linecap="round" />
+                      <line x1="37" y1="15" x2="15" y2="37" class="x-line" stroke-linecap="round" />
+                  </svg>
+              @endif
+          <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8 ">
+              <h1 class="sm:text-xl lg:text-3xl">{{$message}}</h1>
+          </div> --}}
+
+          
+
+          <a href="/" class="text-gray-500">you may now close this window</a>
+      </main>
     </section>
   </body>
 </html>

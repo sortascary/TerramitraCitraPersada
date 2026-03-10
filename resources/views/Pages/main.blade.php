@@ -90,17 +90,18 @@
         @foreach ($blogs as $blog)            
             <div class="col-lg-4 col-6 m-0 p-0 flex relative bg-stone-400" style="height: 300px; width:300px; overflow:hidden;">
               
-              <a href="/Blog/{{ $blog->id }}" >
+              <div >
                 @if ($blog->contentAttachments->isNotEmpty())
                     <img
                         src="{{ asset($blog->contentAttachments->first()->file) }}"
-                        class="blogImg"
+                        class="object-cover"
+                        style="height: 300px; width:300px;"
                     >
                 @endif
                 <div class='BlogOverlay'>
                   <h2>{{$blog->title}}</h2>
                   <div class="flex h-full justify-center items-center">
-                    <div class="BlogLink">
+                    <a href="/Blog/{{ $blog->id }}" class="BlogLink">
                         <span class="flex px-10 py-2 text-white">
 
                           <svg class="w-6 h-6 " aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
@@ -109,10 +110,10 @@
                           </svg>
                           View
                         </span>
-                    </div>
+                      </a>
                   </div>
                 </div>
-              </a>
+              </div>
             </div>
           @endforeach
       </div>

@@ -112,8 +112,16 @@
     </div>
 
     <div>
-        Remote sensing Data
+        <div class="Percission3DTitle"><span>Remote sensing Data</span></div>
+        <p class="md:px-10">Vantor Hub™ adalah cloud berbasis langganan berbasis web untuk tasking, streaming, dan pengunduhan konten spatial intelligence resolusi sangat tinggi secara aman dan terintegrasi. yang berjalan di atas platform Tensorglobe™.</p>
+        <p class="md:px-10">Vantro Hub™ menyediakan akses on-demand ke arsip citra satelit resolusi sangat tinggi lebih dari dua dekade (20 tahun), basemap global 2D dan 3D, stereo imagery, serta analitik bawaan yang mendukung pemantauan perubahan dan pengambilan keputusan berbasis data citra satelit resolusi sangat tinggi.</p>
+        <p class="md:px-10">Fitur Unggulan
+
+Mampu merekam hingga 15 kali per hari pada lokasi yang sama di seluruh dunia, dengan cakupan global mencapai 7 juta km² per hari, di mana 3,5 juta km² di antaranya merupakan citra satelit beresolusi 30 cm.</p>
     </div>
+
+
+
     <div class="my-10">
         <x-Title>Software</x-Title>
     </div>

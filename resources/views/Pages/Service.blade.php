@@ -2,7 +2,7 @@
     @vite('resources/css/services.css')
     @vite(['resources/js/services.js'])
     <main class="pt-20" style="max-width: 1200px; margin: 0 auto; min-height: 100vh">
-        <div style="display: flex; align-items: center; justify-content: space-between;padding: 30px 20px">
+        <div class="flex items-center justify-between px-10 pb-10 mt-30" >
             <x-Title>Services</x-Title>
             <form method="GET">
                 <select name="type" onchange="this.form.submit()" style="background-color: white; border: 2px solid black">

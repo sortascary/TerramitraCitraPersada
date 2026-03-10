@@ -58,12 +58,13 @@ class ChatController extends Controller
     {
         // $user = $request->user();
         // $messages = MessageForum::get();
-        $messages = MessageForum::with('attachments')->where('forum_id', $id)->get();
+        $messages = MessageForum::where('forum_id', $id)->orderBy('created_at', 'desc')->with('attachments')->paginate(20);
 
         return response()->json([
-            'message' => 'messages found',
-            'data' => MessageResource::collection($messages)
-        ], 200);
+            'success' => true,
+            'data' => MessageResource::collection($messages->reverse()),
+            'next_page' => $messages->nextPageUrl() ? $messages->currentPage() + 1 : null
+        ]);
     }
 
     public function sendMessage(ForumMessageRequest $request)
@@ -75,7 +76,6 @@ class ChatController extends Controller
         DB::beginTransaction();
 
         try{
-
             
             $message = MessageForum::create([
                 'user_id' => $user->id,
@@ -126,7 +126,7 @@ class ChatController extends Controller
             $forum->update(['message_id' => $message->id]);
 
             DB::commit();
-    
+
             broadcast(new MessageSent($message))->toOthers();
             
             $messages = MessageForum::where('forum_id', $data['forum_id'])->get();

@@ -9,6 +9,7 @@
             </button>
             <h1 style="margin: 30px 0">{{ $blog->title }}</h1>
         </div>
+        <p>{{ DATE_FORMAT($blog->created_at, 'd M Y ')}}</p>
         
         @if ($blog->contentAttachments->count() >0)
             <div id="default-carousel" class="relative w-full" data-carousel="slide">
@@ -41,8 +42,10 @@
                 @endif
             </div>
         @endif
+        <div class="py-5">
+            {!! nl2br(e($blog->desc)) !!}
+        </div>
         
-        {!! nl2br(e($blog->desc)) !!}
         <hr class="my-5">
         <div class="flex flex-col item-center justify-center text-center">
             <h3>share to:</h3>

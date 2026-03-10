@@ -4,12 +4,14 @@
     </div>
 
     <div class="p-4">
-
-        <button onclick="location.href='/Dashboard/Forum'" class="pb-4">
-            <svg class="w-8 h-8 text-black" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M5 12l4-4m-4 4 4 4"/>
-            </svg>
-        </button>
+        <div class="flex items-center pb-4">
+            <button onclick="location.href='/Dashboard/Forum'">
+                <svg class="w-8 h-8 text-black" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M5 12l4-4m-4 4 4 4"/>
+                </svg>
+            </button>
+            <h2>{{ $forum->name }}</h2>
+        </div>
         
         <div class="flex justify-between mb-3 items-cent">
             <a href="/Dashboard/Forum/edit/{{ $forum->id }}" class="inline-flex items-center justify-center shrink-0 focus:ring-4 focus:ring-brand-medium shadow-xs rounded-2">

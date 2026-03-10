@@ -76,12 +76,6 @@ main{
     margin: 10px;
 }
 
-.blogImg {
-    width:100%; 
-    height:100%; 
-    object-fit:cover;
-    transition: transform 0.4s ease;
-}
 .BlogOverlay:hover{
     opacity: 1;
 }

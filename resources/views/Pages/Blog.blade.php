@@ -1,7 +1,7 @@
 <x-layout>
     @vite('resources/css/services.css');
     <main class="py-20 px-10" style="max-width: 1200px; margin: 0 auto; min-height: 100vh">
-        <div style="display: flex; align-items: center; justify-content: space-between;padding: 30px 20px">
+        <div class="flex items-center justify-between px-10 pb-10 mt-30" >
             <x-Title>Blog</x-Title>
             <form method="GET">
                 <label for="sort">Sort by:</label>
@@ -29,6 +29,7 @@
                         </div>
                         <h2>{{$blog->title}}</h2>
                         <p>{{ Str::limit($blog->desc, 145) }}</p>    
+                        <p class="justify-self-end">{{DATE_FORMAT($blog->created_at, 'd M Y ')}}</p>
                     </div>
                 </a>
             @endforeach

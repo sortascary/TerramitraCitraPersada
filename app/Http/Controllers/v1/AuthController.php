@@ -200,5 +200,39 @@ class AuthController extends Controller
 
         return redirect('/');
     }
+
+    public function verify(Request $request, $id, $hash)
+    {
+        if (!$request->hasValidSignature()) {
+            return view('Dashboard.Verify', [
+                'message' => 'Invalid or expired link',
+                'success' => false
+            ]);
+        }
+
+        $user = User::findOrFail($id);
+
+        if ($user->hasVerifiedEmail()) {
+            return view('Dashboard.Verify', [
+                'message' => 'User is already verified',
+                'success' => false
+            ]);
+        }
+
+        if (! hash_equals(sha1($user->getEmailForVerification()), $hash)) {
+            return view('Dashboard.Verify', [
+                'message' => 'Invalid credentials/data',
+                'success' => false
+            ]);
+        }
+
+        $user->markEmailAsVerified();
+        event(new Verified($user));
+
+        return view('Dashboard.Verify', [
+            'message' => 'Successfully verified your email',
+            'success' => true
+        ]);
+    }
     
 }
