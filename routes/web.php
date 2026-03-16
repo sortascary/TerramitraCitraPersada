@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\v1\AuthController;
 use App\Http\Controllers\v1\PageController;
 use App\Http\Controllers\v1\ChatController;
+use App\Http\Controllers\v1\NotificationController;
 use App\Http\Controllers\v1\DashboardController;
 
 // Route::get('/', function () {
@@ -39,11 +40,17 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::prefix('Forum')->group(function () {
     Route::get('/', [ChatController::class, 'getChats']);
-    Route::get('/{id}', [ChatController::class, 'getMessages']);
-    Route::post('/AddMessage', [ChatController::class, 'sendMessage'])->name('add.message')->middleware('auth');
-    Route::post('/Poll/Vote', [ChatController::class, 'vote'])->middleware('auth');
-    Route::delete('/DeleteMessage/{id}', [ChatController::class, 'deleteMessage'])->middleware('auth');
-    
+    Route::middleware('auth')->group(function () {
+        Route::post('/AddMessage', [ChatController::class, 'sendMessage'])->name('add.message');
+        Route::post('/Poll/Vote', [ChatController::class, 'vote']);
+        Route::delete('/DeleteMessage/{id}', [ChatController::class, 'deleteMessage']);
+        Route::prefix('notifications')->group(function () {
+            Route::get('/', [NotificationController::class, 'index']);
+            Route::post('/{id}/read', [NotificationController::class, 'markRead']);
+            Route::post('/read-all', [NotificationController::class, 'markAllRead']);            
+        });
+    });
+    Route::get('/{id}', [ChatController::class, 'getMessages'])->middleware('auth:sanctum');
 });
 
 Route::prefix('Dashboard')->middleware(['auth', 'role:Admin,Moderator,Konten'])->group(function () {

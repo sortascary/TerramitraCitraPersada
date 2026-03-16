@@ -24,8 +24,9 @@ class PageController extends Controller
      */
     public function home()
     {
-        $blogs = Content::with('contentattachments')->latest()->take(6)->get();
-        return view('Pages.main')->with('blogs', $blogs);
+        $blogs = Content::with('contentattachments')->latest()->take(3)->get();
+        $clients = Client::latest()->take(10)->get();
+        return view('Pages.main')->with('blogs', $blogs)->with('clients', $clients);
     }
 
     public function AboutUs()

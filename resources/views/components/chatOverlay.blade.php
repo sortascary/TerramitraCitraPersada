@@ -1,7 +1,11 @@
 @vite('resources/css/chat.css')
 @vite(['resources/js/chat.js'])
+@vite(['resources/js/notification.js'])
 
 <button class="fab">
+    @auth
+        <span id="notifCount" class="hidden absolute -top-0 -right-0 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">0</span>
+    @endauth
     <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
         <path fill-rule="evenodd" d="M3.559 4.544c.355-.35.834-.544 1.33-.544H19.11c.496 0 .975.194 1.33.544.356.35.559.829.559 1.331v9.25c0 .502-.203.981-.559 1.331-.355.35-.834.544-1.33.544H15.5l-2.7 3.6a1 1 0 0 1-1.6 0L8.5 17H4.889c-.496 0-.975-.194-1.33-.544A1.868 1.868 0 0 1 3 15.125v-9.25c0-.502.203-.981.559-1.331ZM7.556 7.5a1 1 0 1 0 0 2h8a1 1 0 0 0 0-2h-8Zm0 3.5a1 1 0 1 0 0 2H12a1 1 0 1 0 0-2H7.556Z" clip-rule="evenodd"/>
     </svg>
@@ -14,13 +18,14 @@
         window.authUserId = {{ auth()->id() ?? 'null' }};
         window.authUserRole = @json(optional(auth()->user())->role?->role);
     </script>
+
     <div id="messageMenu" class="z-999 right-0 bottom-0 bg-white border border-default-medium rounded-base shadow-lg w-40 h-fit absolute hidden">
             <ul class="p-2 text-sm font-medium bg-white">
                 <li>
-                    <a class="reply-btn block w-full p-2 hover:bg-neutral-tertiary-medium hover:text-heading rounded-md">Reply</a>
+                    <a class="reply-btn block cursor-pointer w-full p-2 hover:bg-red-100 rounded-md">Reply</a>
                 </li>
                 <li id="deleteOption" class="hidden">
-                    <a class="delete-btn block w-full p-2 hover:bg-red-100 hover:text-red-600 rounded-md">Delete</a>
+                    <a class="delete-btn block cursor-pointer w-full p-2 hover:bg-red-100 hover:text-red-600 rounded-md">Delete</a>
                 </li>
             </ul>
         </div>
@@ -72,7 +77,7 @@
 
                     <div class="flex gap-2 justify-end">
                         <button id="cancelPoll" type="button" class="px-4 py-2 text-sm rounded-lg bg-gray-100 hover:bg-gray-200">Cancel</button>
-                        <button id="submitPoll" type="button" class="px-4 py-2 text-sm rounded-lg bg-black text-white hover:bg-gray-800">Send Poll</button>
+                        <button id="submitPoll" type="button" class="px-4 py-2 text-sm rounded-lg bg-black text-white hover:bg-gray-800">Create Poll</button>
                     </div>
                 </div>
             </div>

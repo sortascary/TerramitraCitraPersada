@@ -3,6 +3,9 @@
 namespace App\Http\Controllers\v1;
 
 use App\Events\MessageSent;
+use App\Events\MessageDelete;
+use App\Events\MessageVoted;
+use App\Notifications\NewChatMessage;
 
 use App\Models\Forum;
 use App\Models\ForumAccess;
@@ -59,6 +62,8 @@ class ChatController extends Controller
         // $user = $request->user();
         // $messages = MessageForum::get();
         $messages = MessageForum::where('forum_id', $id)->orderBy('created_at', 'desc')->with('attachments')->paginate(20);
+
+        $request->user()->unreadNotifications()->where('data->forum_id', $id)->get()->each->markAsRead();
 
         return response()->json([
             'success' => true,
@@ -128,12 +133,18 @@ class ChatController extends Controller
             DB::commit();
 
             broadcast(new MessageSent($message))->toOthers();
-            
-            $messages = MessageForum::where('forum_id', $data['forum_id'])->get();
+
+            $forumMembers = $forum->users()
+                ->where('users.id', '!=', $user->id)
+                ->get();
+
+            foreach ($forumMembers as $member) {
+                $member->notify(new NewChatMessage($message));
+            }
     
             return response()->json([
                 'success' => true,
-                'data' => MessageResource::collection($messages)
+                'data' => new MessageResource($message)
             ], 200);
         }catch (\Exception $e) {
              DB::rollback();
@@ -154,21 +165,64 @@ class ChatController extends Controller
         PollVote::create(['option_id' => $data['option_id'], 'user_id' => $userId]);
 
         $forumId = MessageForum::findOrFail($data['message_id'])->forum_id;
-        $messages = MessageForum::where('forum_id', $forumId)->get();
 
-        return response()->json(['success' => true, 'data' => MessageResource::collection($messages)]);
+        $options = PollOption::where('message_id', $data['message_id'])
+            ->with(['pollvotes.user'])
+            ->get()
+            ->map(fn($o) => [
+                'id' => $o->id,
+                'option' => $o->option,
+                'votes_count' => $o->pollvotes->count(),
+                'user_voted' => $o->pollvotes->where('user_id', auth()->id())->isNotEmpty(),
+                'voters' => $o->pollvotes->map(fn($v) => ['name' => $v->user->name])
+            ]);
+
+            broadcast(new MessageVoted(
+                $forumId,
+                $data['message_id'],
+                $options->toArray(),
+                $options->sum('votes_count')
+            ))->toOthers();
+
+        return response()->json(['success' => true, 'options' => $options]);
     }
 
     public function deleteMessage(String $id){
 
         $message = MessageForum::findOrFail($id);
+        $files = MessageAttachment::where('message_id', $id)->get();
+
+        DB::beginTransaction();
     
         if ($message->user_id !== auth()->id() && auth()->user()->role->role !== 'Admin' && auth()->user()->role->role !== 'Moderator') {
             return response()->json(['success' => false, 'message' => 'Unauthorized'], 403);
         }
 
-        $forumId = $message->forum_id;
-        $message->delete();
+        try{
+
+            if ($files){
+                foreach ($files as $file){
+                    if (File::exists(public_path($file->file))) {
+                        File::delete(public_path($file->file));
+                    }
+                }
+            }
+
+            $forumId = $message->forum_id;
+
+            broadcast(new MessageDelete(
+                $forumId,
+                $id
+            ))->toOthers();
+
+            $message->delete();
+
+            DB::commit();
+
+        }catch (\Exception $e) {
+             DB::rollback();
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
 
         $messages = MessageForum::where('forum_id', $forumId)->get();
         return response()->json(['success' => true, 'data' => MessageResource::collection($messages)]);

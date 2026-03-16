@@ -52,26 +52,29 @@ main{
     left: 0;
     bottom: 0;
     right: 0;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.7));
     color: #A7D129;
     display: flex;
     flex-direction: column;
+    justify-content: end;
     transition: opacity .3s ease;
     padding: 10px;
 }
 
+.BlogOverlay h2{
+    white-space: nowrap;
+    max-width: 12ch;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
 .BlogLink{
-    background-color: hsla(0, 0%, 100%, 0.226);
-    border: 2px solid white;
-    border-radius: 30px;
-    margin: 10px;
-    padding: 2px 10px;
+    background-color: #08CB00;
 }
 
 .BlogLink a{
     display: flex;
     align-items: center;
-    color: white;
     text-decoration: none;
     margin: 10px;
 }
@@ -80,3 +83,17 @@ main{
     opacity: 1;
 }
 
+.scrolling{
+    justify-content: space-between;
+    overflow: hidden;
+    min-width: 100%;
+    padding: 0;
+
+    animation: scroll 17s linear infinite;
+}
+
+@keyframes scroll {
+  to {
+    transform: translateX(calc(-100%));
+  }
+}

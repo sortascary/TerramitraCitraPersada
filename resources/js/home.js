@@ -1,8 +1,21 @@
 import gsap from "gsap";
 import ScrollTrigger from "gsap/src/ScrollTrigger";
+
 gsap.registerPlugin(ScrollTrigger);
 
-gsap.to("#bg", {
+gsap.utils.toArray(".frame").forEach(frame => {
+  gsap.from(frame, {
+    y: -10,
+    opacity: 0,
+    duration: 1,
+    scrollTrigger: {
+      trigger: frame,
+      toggleActions: "play pause resume reset"
+    }
+  });
+});
+
+gsap.from("#bg", {
     scrollTrigger: {
         trigger: "#bg",
         start:"bottom 80%",
@@ -10,12 +23,4 @@ gsap.to("#bg", {
         scrub:true,
         pin:true
     }
-});
-
-window.addEventListener("resize", () => {
-  ScrollTrigger.refresh();
-});
-
-window.addEventListener("load", () => {
-  ScrollTrigger.refresh();
 });

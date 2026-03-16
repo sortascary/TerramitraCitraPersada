@@ -27,7 +27,7 @@ class ForumMessageRequest extends FormRequest
             'message_id' => 'nullable|string',
             'message_type' => 'nullable|string',
             'attachments' => 'nullable|array|required_without_all:message',
-            'attachments.*' => 'nullable|file|mimes:jpeg,png,jpg,pdf,doc,docx|max:5120',
+            'attachments.*' => 'nullable|file|mimes:jpeg,png,jpg,svg,pdf,doc,docx|max:5120',
             'poll' => 'nullable|array',
             'poll.options' => 'required_if:message_type,poll|array|min:2',
         ];

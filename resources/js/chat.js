@@ -13,6 +13,7 @@ const attachmentMenu = document.getElementById('attachmentMenu');
 const messageInputContainer = document.getElementById('messageInput');
 const messageInput = document.getElementById('messageData');
 const chatForm = document.getElementById('chatForm');
+const sendMessage = document.getElementById('sendMessage');
 const forumIdInput = document.getElementById('forum_id');
 const CameraMenu = document.getElementById('CameraMenu');
 const video = document.getElementById('video');
@@ -28,12 +29,11 @@ const pollOptions = document.getElementById('pollOptions');
 const addPollOption = document.getElementById('addPollOption');
 const cancelPoll = document.getElementById('cancelPoll');
 const submitPoll = document.getElementById('submitPoll');
-const pollAnonymous = document.getElementById('pollAnonymous');
 const menu = document.getElementById("messageMenu");
 
 let activeMessageId = null;
 let isOpen = false;
-let isAttachmentsOpen = false;
+let isSubmitting = false;
 let currentForumId = null;
 let stream = null;
 let replyID = null;
@@ -129,7 +129,7 @@ async function fetchForums() {
     const forums = (await res.json()).data;
 
     forums.forEach(forum => {
-        const lastMessage = forum.message;
+        const unread = forum.unread == 0 ? '': `<div class="bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">${forum.unread > 99? "99+" : forum.unread}</div>`;
         const initials = forum.name.split(' ').map(w => w.charAt(0).toUpperCase()).join('');
         const imageHTML = forum.image
             ? `<img src="/${forum.image}" class="rounded-circle" style="width: 80px; height: 80px; object-fit: cover;">`
@@ -143,7 +143,10 @@ async function fetchForums() {
                  data-id="${forum.id}" data-name="${forum.name}">
                 <div class="flex-shrink-0" style="width: 80px; height: 80px;">${imageHTML}</div>
                 <div class="ml-2 text-black w-full">
-                    <h4>${forum.name}</h4>
+                    <div class="text-stone-500 flex justify-between">
+                        <h4>${forum.name}</h4>
+                        ${unread}
+                    </div>
                     <div class="text-stone-500 flex justify-between">
                     ${forum.message? 
                         `<div class="m-0">${forum.message.user?.name?? '[Deleted User]'}: ${forum.message.message?? 'File'}</div>
@@ -193,11 +196,51 @@ async function openChat(forumId, forumName) {
 
     console.log('Subscribing to channel:', `forum.${forumId}`);
     echoChannel = window.Echo.channel(`forum.${forumId}`)
-    .listen('MessageSent', (e) => {
-        console.log('Got message:', e);
-        renderMessages([e.message], false, true); // wrap in array
-        chatListContainer.scrollTop = chatListContainer.scrollHeight;
-    });
+        .listen('MessageSent', (e) => {
+            const existingNew = chatListContainer.querySelector('.new-divider');
+            if (existingNew) existingNew.remove();
+            chatListContainer.insertAdjacentHTML('beforeend', `
+                <div class="bg-[#D9D9D9] self-center text-center my-2 rounded-full col-5 flex flex-col p-2">
+                    <strong class="text-black">New</strong>
+                </div>
+            `);
+            renderMessages([e.message], false, true);
+            chatListContainer.scrollTop = chatListContainer.scrollHeight;
+        })
+        .listen('MessageDelete', (e) => {
+            const msgEl = chatListContainer.querySelector(`.MessageMenuIconButton[data-id="${e.message_id}"]`)?.closest('.message');
+            console.log('MessageDeleted received:', e);
+            if (msgEl) msgEl.remove();
+        })
+        .listen('MessageVoted', (e) => {
+            const pollContainer = chatListContainer.querySelector(`.poll-container[data-poll-id="${e.message_id}"]`);
+            console.log('Voted received:', e);
+            if (!pollContainer) return;
+
+            pollContainer.innerHTML = e.options.map(option => {
+                const percent = e.total_votes > 0 ? Math.round((option.votes_count / e.total_votes) * 100) : 0;
+                const votersHTML = option.voters?.length > 0
+                    ? `<div class="text-xs text-gray-400 mt-1">${option.voters.map(v => v.name).join(', ')}</div>`
+                    : '';
+
+                return `
+                    <button type="button" class="vote-btn w-full text-left rounded-lg overflow-hidden border ${option.user_voted ? 'border-blue-500' : 'border-gray-200'} mb-2"
+                        data-poll-id="${e.message_id}" data-option-id="${option.id}">
+                        <div class="relative p-2">
+                            <div class="absolute inset-0 bg-stone-500 transition-all" style="width: ${percent}%"></div>
+                            <div class="relative flex justify-between text-sm">
+                                <span>${option.option}</span>
+                                <span>${percent}%</span>
+                            </div>
+                        </div>
+                        ${votersHTML}
+                    </button>`;
+            }).join('');
+
+            pollContainer.insertAdjacentHTML('beforeend',
+                `<p class="text-xs text-gray-400 vote-count">${e.total_votes} vote${e.total_votes !== 1 ? 's' : ''}</p>`
+            );
+        });
 
     await fetchMessages(); // load messages immediately
     chatListContainer.scrollTop = chatListContainer.scrollHeight;
@@ -267,9 +310,6 @@ function renderMessages(messages, prepend = false, singleAppend = false) {
 
             const optionsHTML = msg.poll.map(option => {
                 const percent = totalVotes > 0 ? Math.round((option.votes_count / totalVotes) * 100) : 0;
-                const votersHTML = option.voters?.length > 0
-                    ? `<div class="text-xs text-gray-400 mt-1">${option.voters.map(v => v.name).join(', ')}</div>`
-                    : '';
 
                 return `
                     <button type="button" class="vote-btn w-full text-left rounded-lg overflow-hidden border ${option.user_voted ? 'border-blue-500' : 'border-gray-200'} mb-2" 
@@ -281,14 +321,13 @@ function renderMessages(messages, prepend = false, singleAppend = false) {
                                 <span>${percent}%</span>
                             </div>
                         </div>
-                        ${votersHTML}
                     </button>`;
             }).join('');
 
             return `
-                <div class="mt-2 w-full">
+                <div class="mt-2 w-full poll-container" data-poll-id="${msg.id}">
                     ${optionsHTML}
-                    <p class="text-xs text-gray-400">${totalVotes} vote${totalVotes !== 1 ? 's' : ''}</p>
+                    <p class="text-xs text-gray-400 vote-count">${totalVotes} vote${totalVotes !== 1 ? 's' : ''}</p>
                 </div>`;
         })() : '';
 
@@ -490,7 +529,8 @@ document.querySelector('#messageMenu .delete-btn').addEventListener('click', asy
 
     const data = await res.json();
     if (data.success) {
-        renderMessages(data.data);
+        const msgEl = chatListContainer.querySelector(`.MessageMenuIconButton[data-id="${activeMessageId}"]`)?.closest('.message');
+        if (msgEl) msgEl.remove();
     }
 });
 
@@ -519,7 +559,6 @@ submitPoll.addEventListener('click', async () => {
     const options = [...pollOptions.querySelectorAll('.poll-option-input')]
         .map(i => i.value.trim())
         .filter(v => v !== '');
-    const anonymous = pollAnonymous.checked;
 
     if (!question || options.length < 2) {
         alert('Please enter a question and at least 2 options.');
@@ -531,7 +570,7 @@ submitPoll.addEventListener('click', async () => {
             forum_id: currentForumId,
             message: question,
             message_type: 'poll',
-            poll: { options, anonymous }
+            poll: { options }
         })
     );
 
@@ -547,7 +586,7 @@ submitPoll.addEventListener('click', async () => {
             forum_id: currentForumId,
             message: question,
             message_type: 'poll',
-            poll: { options, anonymous }
+            poll: { options }
         })
     });
 
@@ -556,7 +595,7 @@ submitPoll.addEventListener('click', async () => {
         pollModal.classList.add('hidden');
         pollQuestion.value = '';
         pollOptions.querySelectorAll('input').forEach(i => i.value = '');
-        renderMessages(data.data);
+        renderMessages([data.data], false, true);
         chatListContainer.scrollTop = chatListContainer.scrollHeight;
     }
 });
@@ -588,7 +627,28 @@ document.addEventListener('click', async (e) => {
 
     const data = await res.json();
     if (data.success) {
-        renderMessages(data.data);
+        const pollContainer = voteBtn.closest('.poll-container');
+        const totalVotes = data.options.reduce((sum, o) => sum + o.votes_count, 0);
+
+        pollContainer.innerHTML = data.options.map(option => {
+            const percent = totalVotes > 0 ? Math.round((option.votes_count / totalVotes) * 100) : 0;
+
+            return `
+                <button type="button" class="vote-btn w-full text-left rounded-lg overflow-hidden border ${option.user_voted ? 'border-blue-500' : 'border-gray-200'} mb-2"
+                    data-poll-id="${pollId}" data-option-id="${option.id}">
+                    <div class="relative p-2">
+                        <div class="absolute inset-0 bg-stone-500 transition-all" style="width: ${percent}%"></div>
+                        <div class="relative flex justify-between text-sm">
+                            <span>${option.option}</span>
+                            <span>${percent}%</span>
+                        </div>
+                    </div>
+                </button>`;
+        }).join('');
+
+        pollContainer.insertAdjacentHTML('beforeend', 
+            `<p class="text-xs text-gray-400 vote-count">${totalVotes} vote${totalVotes !== 1 ? 's' : ''}</p>`
+        );
     }
 });
 
@@ -642,21 +702,38 @@ function renderPreview() {
 }
 
 fileInput.addEventListener('change', () => {
-    if (fileInput.files[0]) {
-        selectedFile = fileInput.files[0];
-        selectedFiles = []; 
-        imageInput.value = '';
-        renderPreview();
+    const file = fileInput.files[0];
+    if (!file) return;
+
+    const maxSize = 5 * 1024 * 1024;
+    if (file.size > maxSize) {
+        alert("File must be less than 5MB");
+        fileInput.value = '';
+        return;
     }
+
+    selectedFile = file;
+    selectedFiles = [];
+    imageInput.value = '';
+    renderPreview();
 });
 
 imageInput.addEventListener('change', () => {
-    if (imageInput.files.length > 0) {
-        selectedFiles = Array.from(imageInput.files);
-        selectedFile = null; 
-        fileInput.value = '';
-        renderPreview();
+    if (imageInput.files.length === 0) return;
+
+    const maxSize = 5 * 1024 * 1024;
+    const oversized = Array.from(imageInput.files).find(f => f.size > maxSize);
+
+    if (oversized) {
+        alert(`"${oversized.name}" must be less than 5MB`);
+        imageInput.value = '';
+        return;
     }
+
+    selectedFiles = Array.from(imageInput.files);
+    selectedFile = null;
+    fileInput.value = '';
+    renderPreview();
 });
 
 if(chatForm){
@@ -665,6 +742,18 @@ if(chatForm){
         const message = messageInput.value.trim();
         if (!message && selectedFiles.length === 0 && !selectedFile) return;
         if (!currentForumId) return;
+
+        
+        // if (isSubmitting) {
+        //     e.preventDefault();
+        //     return;
+        // }
+
+        // isSubmitting = true;
+        
+        sendMessage.disabled = true;
+        sendMessage.innerText = "Sending...";
+        sendMessage.classList.add('opacity-50', 'cursor-not-allowed');
 
         const formData = new FormData();
         formData.append('forum_id', currentForumId);
@@ -684,6 +773,8 @@ if(chatForm){
             formData.append('message_id', replyID);
         }
 
+        console.log(formData);
+
         const res = await fetch(`/Forum/AddMessage`, {
             method: 'POST',
             headers: { 
@@ -694,6 +785,8 @@ if(chatForm){
         });
 
         const data = await res.json();
+
+        console.log(data);
         messageInput.value = '';
         selectedFiles = [];
         selectedFile = null;
@@ -705,7 +798,7 @@ if(chatForm){
         renderPreview();
 
         if (data.success) {
-            renderMessages(data.data);
+            renderMessages([data.data], false, true);
             chatListContainer.scrollTop = chatListContainer.scrollHeight;
         }
     });

@@ -2,22 +2,25 @@
     @vite('resources/css/about.css')
     @vite(['resources/js/about.js'])
     <main class="pt-20 px-10 mb-10" style="max-width: 1200px; margin: 0 auto">
-        <div style="margin: 100px 0px 40px 0px">
-            <x-Title>About us</x-Title>
-        </div>
 
-
-        <div class="flex justify-evenly mb-40">
-            <p style="font-size: 20px; margin-right: 30px">PT. Terramitra Citra Persada didirikan pada tahun 2020 merupakan perusahaan nasional bergerak di bidang 
-            jasa konsultan dalam memberikan solusi pengelolaan sumberdaya alam berbasiskan teknologi digital.</p>
+        <div class="mt-30 relative">
             <div id="imageContainer">
                 <img id="myImage" src="images/indonesiaMap.jpg">
             </div>
+            <div class="mb-10">
+                <x-Title>About us</x-Title>
+            </div>
+    
+            <div class="flex justify-evenly mb-40">
+                <p style="font-size: 20px; margin-right: 30px; z-index: 2"><mark style="background: white"> Terramitra Citra Persada didirikan pada tahun 2020 merupakan perusahaan nasional bergerak di bidang 
+                jasa konsultan dalam memberikan solusi pengelolaan sumberdaya alam berbasiskan teknologi digital.</mark></p>
+            </div>
         </div>
+
         
 
-        <div style="margin: 40px 0px">
-            <x-Title>Managemnet</x-Title>
+        <div class="my-8">
+            <x-Title>Management</x-Title>
         </div>
 
         <div class="row gap-4 mb-10 justify-center">

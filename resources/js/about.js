@@ -18,7 +18,7 @@ const vertexShader = `
     varying vec2 vUv;
     void main() {
       vUv = uv;
-      gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+      gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 0.8);
     }
 `;
 
@@ -37,9 +37,9 @@ const fragmentShader = `
         
         vec2 pixelToMouseDirection = centerOfPixel - u_mouse;
         float pixelDistanceToMouse = length(pixelToMouseDirection);
-        float strength = smoothstep(0.3, 0.0, pixelDistanceToMouse);
+        float strength = smoothstep(0.2, 0.0, pixelDistanceToMouse);
  
-        vec2 uvOffset = strength * - mouseDirection * 0.2;
+        vec2 uvOffset = strength * - mouseDirection * 0.1;
         vec2 uv = vUv - uvOffset;
 
         vec4 colorR = texture2D(u_texture, uv + vec2(strength * u_aberrationIntensity * 0.01, 0.0));

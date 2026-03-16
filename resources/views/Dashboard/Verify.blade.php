@@ -7,7 +7,6 @@
     <link rel="icon" href="/Logo/tcp_logo.png">
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     @vite('resources/css/app.css')
   </head>
   <body class=" text-center flex flex-col justify-center items-center h-[100svh]">

@@ -6,16 +6,18 @@
 }
 
 #imageContainer {
-  position: relative;
-  width: 1000px;
-  height: 200px;
+  position: absolute;
+  width: 80%;
+  aspect-ratio: 2 / 1;
   overflow: hidden;
   display: flex;
   justify-content: center;
   align-items: center;
-  max-width: 100%;
   filter: saturate(0);
   transition: all ease 0.5s;
+  opacity: 0.5;
+  top: 0;
+  right: 0;
 }
 
 #imageContainer:hover {
@@ -28,4 +30,10 @@
   width: 100% !important;
   height: 100% !important;
   object-fit: cover;
+}
+
+@media (max-width: 768px) {
+  #imageContainer{
+    display: none;
+  }
 }
