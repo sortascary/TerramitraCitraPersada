@@ -46,13 +46,10 @@ let echoChannel = null;
 
 window.Pusher = Pusher;
 window.Echo = new Echo({
-    broadcaster: 'reverb',
-    key: import.meta.env.VITE_REVERB_APP_KEY,
-    wsHost: import.meta.env.VITE_REVERB_HOST,
-    wsPort: import.meta.env.VITE_REVERB_PORT,
-    wssPort: import.meta.env.VITE_REVERB_PORT,
-    forceTLS: false,
-    enabledTransports: ['ws'],
+    broadcaster: 'pusher',
+    key: import.meta.env.VITE_PUSHER_APP_KEY,
+    cluster: import.meta.env.VITE_PUSHER_APP_CLUSTER,
+    forceTLS: true,
 });
 
 if (cameraButton){
@@ -742,14 +739,6 @@ if(chatForm){
         const message = messageInput.value.trim();
         if (!message && selectedFiles.length === 0 && !selectedFile) return;
         if (!currentForumId) return;
-
-        
-        // if (isSubmitting) {
-        //     e.preventDefault();
-        //     return;
-        // }
-
-        // isSubmitting = true;
         
         sendMessage.disabled = true;
         sendMessage.innerText = "Sending...";
@@ -800,6 +789,9 @@ if(chatForm){
         if (data.success) {
             renderMessages([data.data], false, true);
             chatListContainer.scrollTop = chatListContainer.scrollHeight;
+            sendMessage.disabled = false;
+            sendMessage.innerText = "Send";
+            sendMessage.classList.remove('opacity-50', 'cursor-not-allowed');
         }
     });
 }

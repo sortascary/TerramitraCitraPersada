@@ -33,6 +33,14 @@ class ChatController extends Controller
     public function getChats()
     {
         $user = Auth::user();
+
+        if (!$user) {
+            return response()->json([
+                'message' => 'Unauthenticated',
+                'data' => []
+            ], 401);
+        }
+
         $forums = $user->forumaccess
         ->load('forum')
         ->pluck('forum');
