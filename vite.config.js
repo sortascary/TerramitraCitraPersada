@@ -10,7 +10,7 @@ export default defineConfig({
                 'resources/css/home.css',
                 'resources/css/client.css',
                 'resources/css/contact.css',
-                'resources/css/services.css',
+                'resources/css/Services.css',
                 'resources/css/about.css',
                 'resources/css/chat.css',
                 'resources/css/dashboard.css',
