@@ -1,5 +1,5 @@
 <x-layout>
-    @vite('resources/css/services.css');
+    @vite('resources/css/Services.css');
     <main class="py-20 px-10" style="max-width: 1200px; margin: 0 auto; min-height: 100vh">
         <div class="flex items-center justify-between px-10 pb-10 mt-30" >
             <x-Title>Blog</x-Title>

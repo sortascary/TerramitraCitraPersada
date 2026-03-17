@@ -86,7 +86,7 @@
                     >
                 @else                    
                     <img 
-                        src="/Storage/profiles/User.png"
+                        src="Profiles/User.png"
                         alt="Your avatar"
                         class="rounded-circle"
                         style="width: 48px; height: 48px; object-fit: cover;"
@@ -140,7 +140,7 @@
                         >
                     @else
                         <img 
-                            src="/Storage/profiles/User.png" 
+                            src="Profiles/User.png" 
                             alt="User avatar"
                             class="rounded-circle"
                             style="width: 48px; height: 48px; object-fit: cover;"

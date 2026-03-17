@@ -23,7 +23,7 @@
     {{-- visi & misi small --}}
     <div class=" d-lg-none">
       <div class="flex justify-between items-center row px-5" style="border-top: 2px solid rgb(226, 226, 226)">
-        <img src="/images/visi.jpg" class="col-lg-6 h-20vh" style="object-fit: cover;">
+        <img src="/images/Visi.jpg" class="col-lg-6 h-20vh" style="object-fit: cover;">
         <div class="col-lg-6 p-20">
           <x-Title>Visi</x-Title>
           <p>Perusahaan swasta nasional yang bergerak di bidang penyediaan Informasi Geospasial dan
@@ -32,7 +32,7 @@
         </div>
       </div>
       <div class="row flex justify-between items-center mb-20 px-5"  style="border-bottom: 2px solid rgb(226, 226, 226)">
-        <img src="/images/misi.jpg" class="col-lg-6 h-20vh" style="object-fit: cover;">
+        <img src="/images/Misi.jpg" class="col-lg-6 h-20vh" style="object-fit: cover;">
         <div class="col-lg-6 p-20">
           <x-Title>Misi</x-Title>
           <p>Komitmen terhadap kualitas hasil pekerjaan dan ketepatan waktu kepada pelanggan.</p>
@@ -66,7 +66,7 @@
         <div class="h-dvh relative overflow-clip">
           <div style="height:300dvh;position: absolute;top:-100dvh">
             <div style="position: sticky;top:0;">
-              <img  src="/images/visi.jpg" class="h-dvh" style="object-fit: cover;" >
+              <img  src="/images/Visi.jpg" class="h-dvh" style="object-fit: cover;" >
             </div> 
           </div>
         </div>
@@ -74,7 +74,7 @@
         <div class="h-dvh relative overflow-clip">
           <div style="height:300dvh;position: absolute;top:-100dvh">
             <div style="position: sticky;top:0;">
-              <img  src="/images/misi.jpg" class="h-dvh" style="object-fit: cover;">
+              <img  src="/images/Misi.jpg" class="h-dvh" style="object-fit: cover;">
             </div>
           </div>
         </div>
