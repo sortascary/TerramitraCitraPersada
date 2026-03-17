@@ -17,6 +17,7 @@ export default defineConfig({
                 'resources/js/about.js',
                 'resources/js/app.js',
                 'resources/js/blog.js',
+                'resources/js/bootstrap.js',
                 'resources/js/chart.js',
                 'resources/js/chat.js',
                 'resources/js/client.js',
