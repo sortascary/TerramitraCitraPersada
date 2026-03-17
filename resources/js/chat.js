@@ -248,7 +248,7 @@ async function fetchMessages(page = 1, prepend = false) {
     if (isLoadingMessages) return;
     isLoadingMessages = true;
 
-    const res = await fetch(`/Forum/${currentForumId}?page=${page}`);
+    const res = await fetch(`/Forum/get/${currentForumId}?page=${page}`);
     const json = await res.json();
     console.log(json);
 

@@ -45,12 +45,10 @@ Route::prefix('Forum')->group(function () {
         Route::post('/Poll/Vote', [ChatController::class, 'vote']);
         Route::delete('/DeleteMessage/{id}', [ChatController::class, 'deleteMessage']);
         Route::prefix('notifications')->group(function () {
-            Route::get('/', [NotificationController::class, 'index']);
-            Route::post('/{id}/read', [NotificationController::class, 'markRead']);
-            Route::post('/read-all', [NotificationController::class, 'markAllRead']);            
+            Route::get('/', [NotificationController::class, 'index']);        
         });
     });
-    Route::get('/{id}', [ChatController::class, 'getMessages'])->middleware('auth:sanctum');
+    Route::get('/get/{id}', [ChatController::class, 'getMessages'])->middleware('auth:sanctum');
 });
 
 Route::prefix('Dashboard')->middleware(['auth', 'role:Admin,Moderator,Konten'])->group(function () {
