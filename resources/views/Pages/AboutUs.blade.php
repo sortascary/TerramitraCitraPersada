@@ -25,25 +25,25 @@
 
         <div class="row gap-4 mb-10 justify-center">
             <div class="drop-shadow-lg managementItem col-md-5">
-                <img style="width: 100px;height: 100px;border-radius: 50%; display: inline; background-color: grey" src="Profiles/User.png">
+                <img style="width: 100px;height: 100px;border-radius: 50%; display: inline; background-color: grey" src="/Profiles/User.png">
                 <br></br>
                 <h2>Anna Yoske Susari</h2>
                 <h2>Direktur Utama</h2>
             </div>
             <div class="drop-shadow-lg managementItem col-md-5">
-                <img style="width: 100px;height: 100px;border-radius: 50%; display: inline; background-color: grey" src="Profiles/User.png">
+                <img style="width: 100px;height: 100px;border-radius: 50%; display: inline; background-color: grey" src="/Profiles/User.png">
                 <br></br>
                 <h2>Tossan Aditya Azhar</h2>
                 <h2>Komisaris Utama</h2>
             </div>
             <div  class="drop-shadow-lg managementItem col-md-5">
-                <img style="width: 100px;height: 100px;border-radius: 50%; display: inline; background-color: grey" src="Profiles/User.png">
+                <img style="width: 100px;height: 100px;border-radius: 50%; display: inline; background-color: grey" src="/Profiles/User.png">
                 <br></br>
                 <h2>R. Yustiono</h2>
                 <h2>Direktur</h2>
             </div>
             <div class="drop-shadow-lg managementItem col-md-5">
-                <img style="width: 100px;height: 100px;border-radius: 50%; display: inline; background-color: grey" src="Profiles/User.png">
+                <img style="width: 100px;height: 100px;border-radius: 50%; display: inline; background-color: grey" src="/Profiles/User.png">
                 <br></br>
                 <h2>San San </h2>
                 <h2>Komisaris</h2>

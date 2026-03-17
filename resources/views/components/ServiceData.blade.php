@@ -45,11 +45,11 @@
             </div>
         </div>
         <div class="col-lg-9 row">
-            <img src="images/service/Satelite/geoeye1.png"  style="object-fit: cover;" class="col-md-6 my-2">
-            <img src="images/service/Satelite/worldview1.png"  style="object-fit: cover;" class="col-md-6 my-2">
-            <img src="images/service/Satelite/worldview2.png"  style="object-fit: cover;" class="col-md-6 my-2">
-            <img src="images/service/Satelite/worldview3.png"  style="object-fit: cover;" class="col-md-6 my-2">
-            <img src="images/service/Satelite/worldviewlegion.png"  style="object-fit: cover;" class="col-md-6 my-2">
+            <img src="images/Service/Satelite/geoeye1.png"  style="object-fit: cover;" class="col-md-6 my-2">
+            <img src="images/Service/Satelite/worldview1.png"  style="object-fit: cover;" class="col-md-6 my-2">
+            <img src="images/Service/Satelite/worldview2.png"  style="object-fit: cover;" class="col-md-6 my-2">
+            <img src="images/Service/Satelite/worldview3.png"  style="object-fit: cover;" class="col-md-6 my-2">
+            <img src="images/Service/Satelite/worldviewlegion.png"  style="object-fit: cover;" class="col-md-6 my-2">
         </div>
     </div>
     <div>

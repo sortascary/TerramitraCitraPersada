@@ -20,7 +20,7 @@
                   >
                @else
                   <img 
-                     src="Profiles/User.png" 
+                     src="/Profiles/User.png" 
                      alt="User avatar"
                      class="rounded-circle bg-stone-500"
                      style="width: 48px; height: 48px; object-fit: cover;"
