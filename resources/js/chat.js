@@ -577,7 +577,7 @@ submitPoll.addEventListener('click', async () => {
             'Content-Type': 'application/json',
             'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value,
             'Accept': 'application/json',
-            'X-Socket-ID': window.Echo.socketId()
+            'X-Socket-Id': window.Echo.socketId()
         },
         body: JSON.stringify({
             forum_id: currentForumId,
@@ -588,6 +588,7 @@ submitPoll.addEventListener('click', async () => {
     });
 
     const data = await res.json();
+    console.log(data);
     if (data.success) {
         pollModal.classList.add('hidden');
         pollQuestion.value = '';
