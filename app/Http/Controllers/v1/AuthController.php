@@ -113,14 +113,14 @@ class AuthController extends Controller
                 'password' => Hash::make($data['password']),
             ]);
 
-            $forum = Forum::where('name', 'Public Forum')->first();
+            $forum = Forum::firstOrCreate([
+                'name' => 'Public Forum'
+            ]);
 
-            if ($forum){
-                ForumAccess::create([
-                    'forum_id' => $forum->id,
-                    'user_id' => $user->id
-                ]);
-            }
+            ForumAccess::firstOrCreate([
+                'forum_id' => $forum->id,
+                'user_id' => $user->id
+            ]);
         }
 
         $user->sendEmailVerificationNotification();

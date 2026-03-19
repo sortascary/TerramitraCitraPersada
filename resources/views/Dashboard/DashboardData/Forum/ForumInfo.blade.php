@@ -75,7 +75,7 @@
 
         </div>
     </div>
-    @vite(['resources/js/Chart.js'])
+    @vite(['resources/js/chart.js'])
     <script>
         window.chartLabels = @json($messages->pluck('date'));
         window.chartValues = @json($messages->pluck('total'));
