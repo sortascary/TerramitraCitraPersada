@@ -18,7 +18,7 @@
           <path d="M20.677 4.117A1.996 1.996 0 0 0 20 4H4c-.225 0-.44.037-.642.105l.758.607L12 10.742 19.9 4.7l.777-.583Z"/>
         </svg>
           <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8 ">
-              <h1 class="sm:text-xl lg:text-3xl">Please check your email</h1>
+              <h1 class="sm:text-xl lg:text-3xl">{{$message}}</h1>
           </div>
 
           

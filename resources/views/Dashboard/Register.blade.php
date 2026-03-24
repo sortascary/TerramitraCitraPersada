@@ -41,7 +41,7 @@
                       <div>
                           <label for="password_confirmation" class="block mb-2 text-sm font-medium text-gray-900 ">Confirm Password</label>
                           <input type="password" name="password_confirmation" id="password_confirmation" placeholder="••••••••" class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" required="">
-                        </div>
+                      </div>
                       <div class="flex items-center justify-between">
                           <div class="flex items-start">
                               <div class="flex items-center h-5">

@@ -43,7 +43,7 @@
                                 <label for="remember" class="text-gray-500">Remember me</label>
                               </div>
                           </div>
-                          <a href="#" class="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500">Forgot password?</a>
+                          <a href="/resetEmail" class="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500">Forgot password?</a>
                       </div>
                       <div>
                         <label for="verify" class="block mb-2 text-sm font-medium text-gray-900">Verification</label>

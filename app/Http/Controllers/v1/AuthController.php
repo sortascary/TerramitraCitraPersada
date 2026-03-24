@@ -10,9 +10,12 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth; 
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 
 use App\Http\Resources\UserResource;
@@ -28,6 +31,19 @@ class AuthController extends Controller
         $remember = $request->boolean('remember');
         $credentials = $request->only('email', 'password');
 
+        $response = Http::asForm()->post('https://www.google.com/recaptcha/api/siteverify', [
+            'secret' => env('RECAPTCHA_SECRET_KEY'),
+            'response' => $request->input('g-recaptcha-response'),
+            'remoteip' => $request->ip(),
+        ]);
+
+        $result = $response->json();
+
+        if (!$result['success']) {
+            return back()->withErrors([
+                'captcha' => 'reCAPTCHA verification failed. Please try again.'
+            ]);
+        }
 
         if (!Auth::attempt($credentials, $remember)) {
             return back()->withErrors([
@@ -96,6 +112,20 @@ class AuthController extends Controller
             return response()->json([
                 'message' => 'Email sudah digunakan.',
             ], 409);
+        }
+
+        $response = Http::asForm()->post('https://www.google.com/recaptcha/api/siteverify', [
+            'secret' => env('RECAPTCHA_SECRET_KEY'),
+            'response' => $request->input('g-recaptcha-response'),
+            'remoteip' => $request->ip(),
+        ]);
+
+        $result = $response->json();
+
+        if (!$result['success']) {
+            return back()->withErrors([
+                'captcha' => 'reCAPTCHA verification failed. Please try again.'
+            ]);
         }
         
         if ($userexist){
@@ -193,7 +223,7 @@ class AuthController extends Controller
     public function LinkSent(){
 
         return view('Dashboard.EmailSent', [
-            'message' => 'Successfully verified your email',
+            'message' => 'Successfully sent to your email',
             'success' => true
         ]);
         
@@ -225,7 +255,6 @@ class AuthController extends Controller
         }
 
         $user->markEmailAsVerified();
-        // event(new Verified($user));
 
         Auth::login($user);
 
@@ -235,5 +264,60 @@ class AuthController extends Controller
             return redirect()->intended('/');
         }
     }
-    
+
+    public function sendResetToken(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|exists:users,email'
+        ]);
+
+        
+        $status = Password::sendResetLink(['email' => $request->email]);
+
+        return $status === Password::RESET_LINK_SENT
+            ?view('Dashboard.EmailSent', [
+                'message' => 'Successfully sent to your email',
+                'success' => true
+            ]):view('Dashboard.EmailSent', [
+                'message' => 'Unable to send reset token try again later',
+                'success' => false
+            ]);
+    }
+
+    public function resetPage($token) {
+        return view('Dashboard.ResetPassword', [
+            'token' => $token
+        ]);
+    }
+
+    public function reset(Request $request)
+    {
+        $data = $request->validate([
+            'token' => 'required',
+            'email' => 'required|email',
+            'password' => 'required|min:8|confirmed',
+        ]);
+
+        $user = null;
+
+        $status = Password::reset(
+            $data,
+            function ($u, $password) use (&$user) {
+                $u->forceFill([
+                    'password' => Hash::make($password),
+                    'remember_token' => Str::random(60),
+                ])->save();
+
+                $user = $u;
+            }
+        );
+
+        if ($status !== Password::PASSWORD_RESET) {
+            return response()->json([
+                'message' => __($status)
+            ], 400);
+        }
+
+        return redirect()->intended('/');
+    }
 }

@@ -26,6 +26,11 @@ Route::prefix('Blog')->group(function () {
 });
 
 Route::get('/verify/{id}/{hash}', [AuthController::class, 'verify'])->name('verification.verify');
+Route::get('/resetEmail', function(){return view('Dashboard.ResetEmail');});
+Route::post('/sendReset', [AuthController::class, 'sendResetToken'])->name('send.reset');
+// Route::post('/resetPassword', [AuthController::class, 'sendResetToken'])->name('send.reset');
+Route::get('/reset-password/{token}', [AuthController::class, 'resetPage'])->name('password.reset');
+Route::post('/reset-password/{token}', [AuthController::class, 'reset'])->name('password.reset');
 Route::get('/linkSent', [AuthController::class, 'LinkSent']);
 
 Route::get('/Contact', [PageController::class, 'Contact']);

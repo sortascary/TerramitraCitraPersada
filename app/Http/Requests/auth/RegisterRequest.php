@@ -26,6 +26,7 @@ class RegisterRequest extends FormRequest
             'email' => 'required|string|email',
             'password' => 'required|string|min:8|confirmed',
             'remember' => 'nullable|boolean',
+            'g-recaptcha-response' => 'required',
         ];
     }
 }
