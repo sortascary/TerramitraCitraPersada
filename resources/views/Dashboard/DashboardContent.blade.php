@@ -66,7 +66,7 @@
                     <div class="flex items-center">
                         <div class="bg-stone-200" style="width: 100px; height: 100px;">
                             @if ($content->contentattachments->first())
-                                <img src="{{ asset($content->contentattachments->first()->file) }}" alt="User avatar" style="width: 100px; height: 100px; object-fit: cover;">  
+                                <img src="{{ asset($content->contentattachments->first()->file) }}" alt="Blog images" style="width: 100px; height: 100px; object-fit: cover;">  
                       
                             @endif
                         </div>

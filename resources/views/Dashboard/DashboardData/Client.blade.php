@@ -33,7 +33,7 @@
             @foreach ($clients as $client)                
                 <div class="bg-white w-full p-3 flex justify-between rounded-[10px] drop-shadow my-3">
                     <div class="flex items-center">
-                        <img src="{{ asset($client->image) }}" alt="User avatar" class="bg-stone-200 " style="width: 100px; height: 100px; object-fit: cover;">
+                        <img src="{{ asset($client->image) }}" alt="Client Logo" class="bg-stone-200 " style="width: 100px; height: 100px; object-fit: cover;">
 
                         <div class="ml-3">
                             <h3 class="mb-0">{{ $client->name }}</h3>

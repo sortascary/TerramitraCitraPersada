@@ -184,16 +184,34 @@ class DashboardController extends Controller
         return view('Dashboard.DashboardData.Blog.BlogAdd');
     }
 
-    public function dashboardBlogEdit(string $id)
+    public function dashboardBlogEdit(Request $request, string $id)
     {
         $blog = Content::with('contentattachments')->find($id);
         $Attachments = ContentAttachment::where('content_id', $id)->get();
-        $CommentCount = Comment::where('content_id', $id)->count();
         $views = ContentView::where('content_id', $id)->selectRaw('DATE(created_at) as date, COUNT(*) as total')->groupBy('date')->orderBy('date')->get();
         $viewCount = ContentView::where('content_id', $id)->count();
         $viewDayCount = ContentView::where('content_id', $id)->where('created_at', '>=', Carbon::today())->count();
         $viewWeekCount = ContentView::where('content_id', $id)->where('created_at', '>=', Carbon::now()->startOfWeek())->count();
         $viewMonthCount = ContentView::where('content_id', $id)->where('created_at', '>=', Carbon::now()->startOfMonth())->count();
+
+
+        $commentData = Comment::with('user', 'blog')->where('content_id', $id);
+
+        if ($request->filled('search')) {
+            $data->where(function ($query) use ($request) {
+
+            $query->where('text', 'like', '%' . $request->search . '%')
+                  ->orWhereHas('user', function ($q) use ($request) {
+                      $q->where('name', 'like', '%' . $request->search . '%');
+                  })
+                  ->orWhereHas('blog', function ($q) use ($request) {
+                      $q->where('title', 'like', '%' . $request->search . '%');
+                  });
+            });
+        }
+        $comments = $commentData->paginate(10);
+        $CommentCount = $commentData->count();
+
         return view('Dashboard.DashboardData.Blog.BlogEdit')
                     ->with('Attachments', $Attachments)
                     ->with('views', $views)
@@ -202,6 +220,7 @@ class DashboardController extends Controller
                     ->with('viewWeekCount', $viewWeekCount)
                     ->with('viewMonthCount', $viewMonthCount)
                     ->with('CommentCount', $CommentCount)
+                    ->with('comments', $comments)
                     ->with('blog', $blog);
     }
 

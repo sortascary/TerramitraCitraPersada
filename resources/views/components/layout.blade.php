@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.css"/>
     <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.js"></script>
     @vite('resources/css/app.css')
+    @vite('resources/js/app.js')
   </head>
   <body>
     <x-navBar></x-navBar>

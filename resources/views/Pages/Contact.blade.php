@@ -35,7 +35,7 @@
                         <p>info@terramitra.com; sales@terramitra.com</p>
                     </li>
                     <li class="my-5 info-button">
-                        <a href="#" class="py-2">
+                        <a href="https://wa.me/6281294700885" class="py-2">
                             <p class="p-0 m-0">
                                 More information
                             </p>

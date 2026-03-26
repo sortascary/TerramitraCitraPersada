@@ -44,7 +44,7 @@
     <div class="row mb-20 d-none d-lg-flex">
       <div class=" justify-between items-center col-6 p-0" style="border-top: 2px solid rgb(226, 226, 226); border-bottom: 2px solid rgb(226, 226, 226)">
         <div class=" px-10 h-dvh flex flex-column justify-center relative">
-          <img src="/images/Decoration/Asset2.png" class="w-full absolute bottom-0 opacity-[25%]">
+          <img src="/images/Decoration/Asset2.png" class="w-full absolute bottom-0 opacity-[25%] fromLeft">
           <div class="relative" style="line-height: 80px">
             <x-Title>Visi</x-Title>
           </div>
@@ -53,7 +53,7 @@
           </h3>
         </div>
         <div class=" px-20 h-dvh flex flex-column justify-center relative">
-          <img src="/images/Decoration/Asset3.png" class="w-full absolute bottom-0 opacity-[25%]">
+          <img src="/images/Decoration/Asset3.png" class="w-full absolute bottom-0 opacity-[25%] fromLeft">
           <div class="relative text-[80px]" >
             <x-Title>Misi</x-Title>
           </div>

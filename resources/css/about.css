@@ -16,8 +16,6 @@
   filter: saturate(0);
   transition: all ease 0.5s;
   opacity: 0.5;
-  top: 0;
-  right: 0;
 }
 
 #imageContainer:hover {
@@ -32,8 +30,8 @@
   object-fit: cover;
 }
 
-@media (max-width: 768px) {
+/* @media (max-width: 768px) {
   #imageContainer{
     display: none;
   }
-}
+} */

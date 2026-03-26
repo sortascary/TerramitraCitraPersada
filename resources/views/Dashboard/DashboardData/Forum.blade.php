@@ -37,7 +37,7 @@
                 <div class="flex items-center">
                     <div class="bg-stone-200 rounded-circle items-center justify-center flex" style="width: 100px; height: 100px; object-fit: cover;">
                         @if ($forum->image)
-                        <img src="{{ asset($forum->image) }}" alt="User avatar" class="bg-stone-200 rounded-circle " style="width: 100px; height: 100px; object-fit: cover;">
+                        <img src="{{ asset($forum->image) }}" alt="Forum image" class="bg-stone-200 rounded-circle " style="width: 100px; height: 100px; object-fit: cover;">
                             
                         @else
                         <h2 class="m-0">

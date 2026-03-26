@@ -30,7 +30,7 @@
                 <a href="/Contact" >Contact</a>
             </li>
             <li class="py-4 px-3">
-                <a href="#" >Download</a>
+                <a href="https://forms.gle/QF6xKADX1jk1YBJ57" >Download</a>
             </li>
             @auth
                 <li class="px-2">
@@ -94,7 +94,7 @@
                 <a href="/Contact" class="py-4 px-3">Contact</a>
             </li>
             <li class="py-4 navLink">
-                <a href="#" class="py-4 px-3">Download</a>
+                <a href="https://forms.gle/QF6xKADX1jk1YBJ57" class="py-4 px-3">Download</a>
             </li>
             @auth
                 <li>

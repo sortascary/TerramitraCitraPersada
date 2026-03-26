@@ -10,7 +10,7 @@
                 <div class="flex flex-wrap items-stretch py-2 {{ $loop->odd ? 'pl-lg-10 justify-end' : 'pr-lg-10'  }}">
                     @foreach ($clientRow as $client)
                     <div class="col-lg-3 col-md-4 col-6 flex flex-col p-2">
-                        <div class="p-3 rounded-lg bg-white drop-shadow flex flex-col h-full">
+                        <div class="p-3 rounded-lg bg-white drop-shadow flex flex-col h-full {{ $loop->parent->odd ? 'fromRight' : 'fromLeft'  }}">
                             <img
                                 src="{{ $client->image }}"
                                 class="h-20"
