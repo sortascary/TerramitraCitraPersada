@@ -32,7 +32,20 @@
                       </div>
                       <div>
                           <label for="password" class="block mb-2 text-sm font-medium text-gray-900 ">Password</label>
-                          <input type="password" name="password" id="password" placeholder="••••••••" class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" required="">
+                          <div class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 flex block w-full ">
+                            <input type="password" name="password" id="password" placeholder="••••••••" class="w-full p-2.5" required="">
+                            <button 
+                                type="button"
+                                id="passBtn"
+                                class="w-fit p-2.5"
+                            >
+                                <svg class="w-6 h-6 text-black" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                  <path stroke="currentColor" stroke-width="2" d="M21 12c0 1.2-4.03 6-9 6s-9-4.8-9-6c0-1.2 4.03-6 9-6s9 4.8 9 6Z"/>
+                                  <path stroke="currentColor" stroke-width="2" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/>
+                                </svg>
+
+                            </button>
+                          </div>
                       </div>
                       <div class="flex items-center justify-between">
                           <div class="flex items-start">

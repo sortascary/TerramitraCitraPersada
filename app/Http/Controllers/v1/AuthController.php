@@ -155,13 +155,13 @@ class AuthController extends Controller
 
         $user->sendEmailVerificationNotification();
         
-        if ($request->expectsJson()) {
-            return response()->json([
-                'message' => 'User created successfully. Check your email for verification link.',
-                'data' => new UserResource($user),
-                'token' => $user->createToken('auth_token')->plainTextToken,
-            ], 201);
-        }
+        // if ($request->expectsJson()) {
+        //     return response()->json([
+        //         'message' => 'User created successfully. Check your email for verification link.',
+        //         'data' => new UserResource($user),
+        //         'token' => $user->createToken('auth_token')->plainTextToken,
+        //     ], 201);
+        // }
 
         return redirect('/linkSent');
     }
@@ -196,11 +196,12 @@ class AuthController extends Controller
 
         $user->sendEmailVerificationNotification();
 
-        return response()->json([
-            'message' => 'User created successfully. Check your email for verification link.',
-            'data' => new UserResource($user),
-            'token' => $user->createToken('auth_token')->plainTextToken,
-        ], 201);
+        // return response()->json([
+        //     'message' => 'User created successfully. Check your email for verification link.',
+        //     'data' => new UserResource($user),
+        //     'token' => $user->createToken('auth_token')->plainTextToken,
+        // ], 201);
+        return redirect('/linkSent');
     }
 
     public function logout(Request $request)
